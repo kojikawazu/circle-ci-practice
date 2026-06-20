@@ -1,0 +1,85 @@
+version: 2.1
+
+# pnpm の有効化（corepack）と store キャッシュの共通手順
+commands:
+  setup_pnpm:
+    steps:
+      - run:
+          name: Enable pnpm via corepack
+          command: |
+            corepack enable
+            corepack prepare pnpm@10.33.0 --activate
+            pnpm config set store-dir .pnpm-store
+            pnpm --version
+      - restore_cache:
+          keys:
+            - pnpm-v1-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-v1-
+      - run:
+          name: Install dependencies
+          command: pnpm install --frozen-lockfile
+      - save_cache:
+          key: pnpm-v1-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - .pnpm-store
+
+jobs:
+  # UT: lint(typecheck) + Vitest。DB 不要
+  unit:
+    docker:
+      - image: cimg/node:22.14
+    steps:
+      - checkout
+      - setup_pnpm
+      - run:
+          name: Lint (typecheck)
+          command: pnpm lint
+      - run:
+          name: Unit tests (Vitest)
+          command: pnpm test:unit
+
+  # E2E: 実 PostgreSQL サービス + Playwright（ブラウザ同梱イメージ）
+  e2e:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.61.0-jammy
+      - image: cimg/postgres:16.4
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: tasks
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/tasks
+    steps:
+      - checkout
+      - setup_pnpm
+      - run:
+          name: Wait for PostgreSQL
+          command: |
+            for i in $(seq 1 30); do
+              (echo > /dev/tcp/localhost/5432) >/dev/null 2>&1 && echo "postgres up" && exit 0
+              echo "waiting for postgres ($i)..."
+              sleep 1
+            done
+            echo "postgres did not become ready" && exit 1
+      - run:
+          name: Run migrations
+          command: pnpm db:migrate
+      - run:
+          name: Build Nuxt
+          command: pnpm build
+      - run:
+          name: E2E tests (Playwright)
+          command: pnpm test:e2e
+      - store_artifacts:
+          path: apps/web/playwright-report
+          destination: playwright-report
+      - store_test_results:
+          path: apps/web/test-results
+
+workflows:
+  test:
+    jobs:
+      - unit
+      - e2e:
+          requires:
+            - unit

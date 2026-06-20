@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# nuxt / nitro build output
+.nuxt/
+.output/
+.data/
+dist/
+
+# env
+.env
+.env.*
+!.env.example
+
+# tests
+playwright-report/
+test-results/
+coverage/
+
+# misc
+.DS_Store
+*.log
