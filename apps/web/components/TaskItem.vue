@@ -1,7 +1,18 @@
+<!--
+  タスク 1 件の表示。純粋な presentational component。
+
+  チェックボックスは `v-model` ではなく `:checked` + `@change` にしている。
+  `v-model` だと props を直接書き換えることになり、**サーバの応答を待たずに
+  画面だけ先に変わる**（更新が失敗しても戻らない）。表示は常に親が持つ
+  `tasks` を正とし、更新はイベントで親へ委ねる。
+-->
 <script setup lang="ts">
 import type { Task } from '@app/shared'
 
+/** 表示対象のタスク。完了済みは打ち消し線で表現する */
 defineProps<{ task: Task }>()
+
+/** 完了トグル / 削除を親へ通知する。自身では状態を変えない */
 const emit = defineEmits<{ toggle: [task: Task]; remove: [task: Task] }>()
 </script>
 
