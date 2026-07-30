@@ -52,6 +52,8 @@ CI（CircleCI）は GitHub への push で起動し、`unit`（lint + Vitest）�
 
 | 対象 | Codex 向け指示ファイル | 追加で確認する内容 |
 |---|---|---|
-| リポジトリ全体 | [`AGENTS.md`](./AGENTS.md) | 共通ルール |
-| `apps/web/**` | [`apps/web/AGENTS.md`](./apps/web/AGENTS.md) | Nuxt・TypeScript・テスト |
-| `packages/shared/**` | [`packages/shared/AGENTS.md`](./packages/shared/AGENTS.md) | 共有型・スキーマの影響確認 |
+| リポジトリ全体 | [`AGENTS.md`](./AGENTS.md) | 共通ルール（コーディング規約・重複/デッドコード・エラーハンドリング） |
+| `apps/web/**` | [`apps/web/AGENTS.md`](./apps/web/AGENTS.md) | Nuxt・テスト＋ `typescript.md` / `jsdoc.md` |
+| `apps/web/server/**` | 同上 | 上記に加えて `api.md`（Nitro Server API） |
+| `packages/shared/**` | [`packages/shared/AGENTS.md`](./packages/shared/AGENTS.md) | 共有型・スキーマの影響確認＋ `typescript.md` / `jsdoc.md` |
+| `.circleci/**` | [`AGENTS.md`](./AGENTS.md) | `circleci.md`（CI の設定・発火ルール） |

@@ -19,3 +19,25 @@ globs:
 - 正常系 1 : 異常系（準正常系 + 異常系）2 以上の比率を目安とする。
 - ビジネスロジックをモックしない。モックは外部 I/O（HTTP通信、DB接続、ファイルシステム）のみ。
 - `toBeTruthy()` 等の曖昧なアサーションを避け、具体的な値で検証する。
+
+## テストツール
+
+| テスト種別 | ツール |
+|-----------|--------|
+| ユニットテスト | Vitest + Vue Test Utils（DOM は happy-dom） |
+| E2E テスト | Playwright（実 PostgreSQL・ビルド済み `.output` を起動） |
+
+## テストファイル配置
+
+テストは**専用ディレクトリに集約する**（ソースにコロケートしない）:
+
+- **ユニット / コンポーネントテスト**: `apps/web/tests/unit/`
+- **E2E テスト**: `apps/web/e2e/`
+- `components/` `composables/` `server/` の中にテストファイルを置かない。
+
+## E2E の書き方
+
+- **待機は Locator の自動待機に任せる**。固定時間の `waitForTimeout` / `sleep` を入れない（遅い環境で落ち、速い環境で無駄に待つ）。
+- **テスト間で状態を共有しない**。各テストが自分でデータを用意し、他のテストの実行順に依存しない（`fullyParallel` 前提）。
+- **`test.only` を commit しない**（CI は `forbidOnly` で失敗する）。
+- 失敗の再現材料（trace・レポート）は CI の artifacts に残す（`circleci.md`）。

@@ -10,13 +10,19 @@
 - `.claude/rules/git.md`
 - `.claude/rules/testing.md`
 - `.claude/rules/shortcuts.md`
+- `.claude/rules/coding-standards.md`
+- `.claude/rules/duplication.md`
+- `.claude/rules/dead-code.md`
+- `.claude/rules/error-handling.md`
 
 ## パス別ルール
 
 より深いディレクトリの `AGENTS.md` がある場合は、ここに加えてその指示も適用します。
 
-- `apps/web/**`: `apps/web/AGENTS.md`
-- `packages/shared/**`: `packages/shared/AGENTS.md`
+- `apps/web/**`: `apps/web/AGENTS.md` / `.claude/rules/typescript.md` / `.claude/rules/jsdoc.md`
+- `apps/web/server/**`: 上記に加えて `.claude/rules/api.md`
+- `packages/shared/**`: `packages/shared/AGENTS.md` / `.claude/rules/typescript.md` / `.claude/rules/jsdoc.md`
+- `.circleci/**`: `.claude/rules/circleci.md`
 
 ## ルール構成を変更するとき
 
