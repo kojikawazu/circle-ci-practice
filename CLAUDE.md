@@ -13,7 +13,15 @@ CircleCI を学習・検証するための練習用プロジェクト
 | quality-gate.md | 全体 | 品質ゲート（セルフレビュー・設計/実装レビュー） |
 | documentation.md | 全体 | ドキュメント更新ルール |
 | git.md | 全体 | GitHub Flow・ブランチ命名・push 禁止物 |
-| testing.md | 全体 | テスト分類・原則 |
+| testing.md | 全体 | テスト分類・原則・テストツール（Vitest / Playwright） |
+| coding-standards.md | 全体 | 言語・PM・型チェック・環境変数の基本規約 |
+| typescript.md | `apps/web/**`, `packages/shared/**` | type/interface・型と定数の配置・any 禁止・Zod 統一 |
+| jsdoc.md | `apps/web/**`, `packages/shared/**` | 公開シンボル・型メンバーへのコメント必須 |
+| api.md | `apps/web/server/**` | Nitro Server API の設計・検証・レスポンス整形 |
+| duplication.md | 全体 | 重複と共通化の判断基準 |
+| dead-code.md | 全体 | デッドコード禁止 |
+| error-handling.md | 全体 | エラーハンドリング方針 |
+| circleci.md | `.circleci/**` | CI の設定・発火ルール・キャッシュ・成果物 |
 
 ## AI エージェント向けルール
 
