@@ -17,7 +17,7 @@
   "dependencies": {
     "@app/shared": "workspace:*",
     "drizzle-orm": "^0.45.0",
-    "nuxt": "^3.21.0",
+    "nuxt": "^4.6.2",
     "postgres": "^3.4.9",
     "vue": "^3.5.0",
     "zod": "^3.24.0"
