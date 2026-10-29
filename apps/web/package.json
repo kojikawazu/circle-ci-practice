@@ -28,7 +28,7 @@
     "@vitejs/plugin-vue": "^5.2.0",
     "@vue/test-utils": "^2.4.11",
     "drizzle-kit": "^0.31.0",
-    "happy-dom": "^20.10.0",
+    "happy-dom": "^21.0.4",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.7.0",
     "vitest": "^4.1.0",
