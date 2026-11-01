@@ -20,7 +20,7 @@
     "nuxt": "^3.21.0",
     "postgres": "^3.4.9",
     "vue": "^3.5.0",
-    "zod": "^3.24.0"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",
